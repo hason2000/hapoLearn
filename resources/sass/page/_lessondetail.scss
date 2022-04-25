@@ -81,9 +81,105 @@
       text-decoration: none;
     }
   }
+
+  .btn-join-learned {
+    background-color: #6c757d;
+    border: 0;
+    box-shadow: none;
+    cursor: not-allowed;
+
+    &:hover {
+      color: white;
+      background-color: #6c757d;
+    }
+  }
 }
 
 .text-notify {
   font-style: italic;
   color: $color-black-0;
+}
+
+.doc-title {
+  font-size: 25px;
+  font-weight: 700;
+  line-height: calc(31 / 25);
+  letter-spacing: -0.02em;
+  color: $color-black-0;
+  padding: 25px 15px;
+}
+
+.doc-item {
+  padding: 20px 15px;
+  border-top: 1px solid #F3F0F0;
+}
+
+.doc-icon {
+  padding-right: 17px;
+}
+
+.doc-format {
+  color: #BDB9B9;
+  line-height: calc(17.17 / 14);
+  padding-right: 23px;
+}
+
+.doc-name {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: calc(22 / 18);
+  letter-spacing: -0.02em;
+  color: $color-black-0;
+
+  &:hover {
+    text-decoration: none;
+    color: $color-black-0;
+  }
+}
+
+.doc-btn {
+  font-size: 15px;
+  color: white;
+  font-weight: 700;
+  line-height: calc(18 / 15);
+  letter-spacing: -0.05em;
+  padding: 10px 15px;
+  background-color: $color-green-0;
+  box-shadow: inset 0px 1.5px 2px #6F8710;
+  border-radius: 22px;
+  border: 0;
+
+  &:hover {
+    background-color: $color-green-1;
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.progress-bar {
+  background-color: $color-green-0;
+}
+
+.doc-item {
+  .btn-learned {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    box-shadow: none;
+  
+    &:hover {
+      background-color: #6c757d;
+    }
+  }
+}
+
+.progress {
+  position: relative;
+}
+
+.number-progress {
+  position: absolute;
+  bottom: -60%;
+  left: 47%;
+  color: white;
+  font-weight: bold;
 }

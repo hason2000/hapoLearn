@@ -14,6 +14,6 @@ class DocumentsSeeder extends Seeder
      */
     public function run()
     {
-        Document::factory()->count(100)->create();
+        Document::factory()->count(1500)->create();
     }
 }

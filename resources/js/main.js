@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
   $('#headerBtnIcon').click(function() {
     if ($('.header-content').hasClass('show')) {
       $('.navbar-toggler-icon').removeClass('hide');
@@ -126,6 +125,10 @@ $(document).ready(function(){
       $('.form-l').addClass('d-none');
       $('.form-l').removeClass('d-block');
     }
+  }
+
+  if ($('.form-l').hasClass('form-l-require')) {
+    $('#loginRegisterModal').modal();
   }
 
   $('.btn-listcourse-filter').click(function (){

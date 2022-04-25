@@ -23,14 +23,14 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="lesson" role="tabpanel" aria-labelledby="lesson-tab">
                             <div class="lesson-top d-flex align-item-center justify-content-between">
-                                <form action="" method="get">
+                                <form action="{{ route('courses.show', $course->id) }}" method="get">
                                     <input type="text" placeholder="Search..." name="keyword" @if (!is_null($request['keyword']))
                                         value="{{ $request['keyword'] }}"
                                     @endif>
                                     <i class="fa fa-search"></i>
                                     <button type="submit">Tìm kiếm</button>
                                 </form>
-                                <a href="" class="btn-join">Tham gia khóa học</a>
+                                @include('buttons.button_course')
                             </div>
                             <div class="lesson-content">
                                 @forelse ($lessons as $key => $lesson)
@@ -44,7 +44,9 @@
                                             @endif
                                             <a href="{{ route('courses.lessons.show', [$course->id, $lesson->id]) }}" class="lesson-title">{{ $lesson->name }}</a>
                                         </div>
-                                        <a href="" class="lesson-btn">Learn</a>
+                                        <a href="{{ route('courses.lessons.show', [$course->id, $lesson->id]) }}" class="lesson-btn">
+                                            {{ $lesson->isLearned() ? 'Learned' : 'Learn' }}
+                                        </a>
                                     </div>
                                 @empty
                                     <div class="py-5 text-center">
@@ -145,7 +147,7 @@
                                     <div class="review-detail-item">
                                         <div class="review-detail-top">
                                             <div class="avata-user-review">
-                                                <img src="https://via.placeholder.com/640x480.png/00aa99?text=sed" alt="">
+                                                <img src="https://via.placeholder.com/640x480.png/00aa99?text=sed" alt="" class="w-100">
                                             </div>
                                             <div class="review-detail-star">
                                                 <i class="fa fa-star"></i>

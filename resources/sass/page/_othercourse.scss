@@ -99,22 +99,34 @@
       background-color: $color-green-1;
     }
   }
-}
 
-.btn-join {
-  padding: 7px 25px;
-  background-color: $color-green-0;
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  letter-spacing: -0.05em;
-  box-shadow: inset 0px 1.5px 2px #6f8710;
-  border-radius: 22px;
-
-  &:hover {
+  .btn-join {
+    padding: 7px 25px;
+    background-color: $color-green-0;
     color: white;
-    background-color: $color-green-1;
-    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: -0.05em;
+    box-shadow: inset 0px 1.5px 2px #6f8710;
+    border-radius: 22px;
+  
+    &:hover {
+      color: white;
+      background-color: $color-green-1;
+      text-decoration: none;
+    }
+  }
+
+  .btn-join-learned {
+    background-color: #6c757d;
+    border: 0;
+    box-shadow: none;
+    cursor: not-allowed;
+
+    &:hover {
+      color: white;
+      background-color: #6c757d;
+    }
   }
 }
 
