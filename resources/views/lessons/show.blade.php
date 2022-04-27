@@ -8,20 +8,24 @@
                 <div class="detail-img">
                     <img class="w-100 h-100" src="{{ $course->img_url }}" alt="img of {{ $course->title }}">
                 </div>
+                <div class="progress mt-4">
+                    <p class="number-progress">@if (is_null($userLesson)) 0 @else {{ $userLesson->progress }} @endif%</p>
+                    <div class="progress-bar" role="progressbar" style="width:@if (is_null($userLesson)) 0% @else {{ $userLesson->progress }}% @endif;"></div>
+                </div>
                 <div class="detail-left-content">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                           <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Descriptions</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Reviews</a>
+                          <a class="nav-link" id="doc-tab" data-toggle="tab" href="#doc" role="tab" aria-controls="doc" aria-selected="false">Documents</a>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Reviews</a>
+                          </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                            <form action="">
-                                <button class="des-btn btn btn-success mt-3" type="submit">Hoàn Thành</button>
-                            </form>
                             <div class="des-content">
                                 <div class="des-title">
                                     Descriptions lesson
@@ -38,6 +42,30 @@
                                             </div>
                                         @endforeach
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="doc" role="tabpanel" aria-labelledby="doc-tab">
+                            <div class="lesson-doc-content">
+                                <div class="doc-title">Documents</div>
+                                <div class="doc-content">
+                                    @forelse ($documents as $document)
+                                        <div class="doc-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <div class="doc-icon">
+                                                    <img src="{{ asset('images/doc_img.png') }}" alt="icondoc">
+                                                </div>
+                                                <div class="doc-format">docx</div>
+                                                <a class="doc-name" href="{{ $document->link }}">{{ $document->name }}</a>
+                                            </div>
+                                            <div class="d-flex">
+                                                <a href="{{ $document->link }}" class="doc-btn mr-1">Preview</a>
+                                                @include('buttons.button_document')
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div>Không có bài học nào</div>
+                                    @endforelse
                                 </div>
                             </div>
                         </div>
@@ -86,9 +114,9 @@
                         @else
                             <span class="data">{{ $course->price }} $</span>
                         @endif
-                    </div>
+                    </div>                
                     <div class="lesson-detail-btn text-center">
-                        <button type="submit">Kết thúc khóa học</button>
+                        @include('buttons.button_course')
                     </div>
                 </div>
                 @include('courses.course_other')

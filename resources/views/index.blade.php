@@ -26,9 +26,7 @@
                         <div class="card-body courses-card-body">
                             <div class="card-title">{{ $c->title }}</div>
                             <p class="card-text">
-                                @if(strlen($c->description) > 100)
-                                    {{ substr($c->description, 0, 97) }}...
-                                @endif
+                                {{ limitString($c->description, 100)}}
                             </p>
                             <a href="#" class="btn courses-btn">Take This Course</a>
                         </div>
@@ -46,9 +44,7 @@
                             <div class="card-body courses-card-body">
                                 <div class="card-title">{{ $c->title }}</div>
                                 <p class="card-text">
-                                    @if(strlen($c->description) > 100)
-                                        {{ substr($c->description, 0, 97) }}...
-                                    @endif
+                                    {{ limitString($c->description, 100)}}
                                 </p>
                                 <a href="#" class="btn courses-btn">Take This Course</a>
                             </div>
@@ -121,9 +117,7 @@
                     <div class="feedback-item">
                         <div class="feedback-text">
                             <p class="review-text">
-                                @if(strlen($rv->content) > 130)
-                                    "{{ substr($rv->content, 0, 127) }}..."
-                                @endif
+                                {{ limitString($c->description, 130)}}
                             </p>
                         </div>
                         <div class="feedback-bot">

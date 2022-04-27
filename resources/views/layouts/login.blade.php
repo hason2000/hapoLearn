@@ -5,7 +5,7 @@
                 <p class="modal-header-l modal-active-cus">LOGIN</p>
                 <P class="modal-header-r">REGISTER</P>
             </div>
-            <form class="form-r d-none @if($errors->first('username') || $errors->first('password') || $errors->first('cfpassword') || $errors->first('email')) form-r-err  @endif" action="{{ route('register') }}" method="POST">
+            <form class="form-r d-none @if($errors->first('username') || $errors->first('password') || $errors->first('cfpassword') || $errors->first('email')) form-r-err  @endif" action="{{ route('register') }} " method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="username">Username:</label>
@@ -47,8 +47,9 @@
                     <button type="submit">REGISTER</button>
                 </div>
             </form>
-
-            <form class="form-l d-block @if($errors->first('login_username') || $errors->first('login_password') || session('error')) form-l-err @endif" action="{{ route('login') }}" method="post">
+            <form class="form-l d-block @if($errors->first('login_username') || $errors->first('login_password') || session('error')) form-l-err @endif @if (session('require_login'))
+                form-l-require
+            @endif" action="{{ route('login') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="usernamel">Username:</label>
