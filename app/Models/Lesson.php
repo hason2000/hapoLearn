@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class Lesson extends Model
 {
@@ -32,6 +34,12 @@ class Lesson extends Model
     public function documents()
     {
         return $this->hasMany(Document::class, 'lesson_id');
+    }
+
+    public function isLearned()
+    {
+        $userLesson = UserLesson::getUserLesson(Auth::id(), $this->id);
+        return (!is_null($userLesson) && $userLesson->progress == Config::get('lesson.max_progress_lesson'));
     }
 
     public function scopeFilter($query, $data)

@@ -14,7 +14,7 @@ class DocumentFactory extends Factory
     public function definition()
     {
         return [
-            'lesson_id' => rand(1, 100),
+            'lesson_id' => rand(1, 500),
             'name' => "document".rand(1, 10),
             'link' => $this->faker->url()
         ];

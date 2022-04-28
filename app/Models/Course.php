@@ -46,12 +46,59 @@ class Course extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_courses', 'course_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_courses', 'course_id', 'user_id')->withPivot('status');
+    }
+
+    public function usersReview()
+    {
+        return $this->belongsToMany(User::class, 'reviews', 'course_id', 'user_id');
     }
 
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'course_tags', 'course_id', 'tag_id');
+    }
+
+    public function caculateReview()
+    {
+        $reviews = $this->reviews->toArray();
+        $tong = 0;
+        foreach ($reviews as $review) {
+            $tong += $review['star_rating'];
+        }
+
+        return round($tong / count($reviews), 1, PHP_ROUND_HALF_EVEN);
+    }
+
+    public function getReviewsFiveStar()
+    {
+        return count($this->reviews->where('star_rating', '5')->toArray());
+    }
+
+    public function getReviewsFourStar()
+    {
+        return count($this->reviews->where('star_rating', '4')->toArray());
+    }
+
+    public function getReviewsThreeStar()
+    {
+        return count($this->reviews->where('star_rating', '3')->toArray());
+    }
+
+    public function getReviewsTwoStar()
+    {
+        return count($this->reviews->where('star_rating', '2')->toArray());
+    }
+
+    public function getReviewsOneStar()
+    {
+        return count($this->reviews->where('star_rating', '1')->toArray());
+    }
+
+    public function caculateProgressReview($number)
+    {
+        $reviews = $this->reviews->toArray();
+        return $number * Config::get('lesson.max_progress_lesson') / count($reviews);
     }
 
     public function scopeFilter($query, $data)

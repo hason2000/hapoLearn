@@ -24,7 +24,7 @@ class RegisterController extends Controller
         $user = User::create($request->all());
         if ($user) {
             Auth::login($user, true);
-            return redirect()->route('home');
+            return redirect(url()->previous());
         } else {
             return redirect()->back();
         }
