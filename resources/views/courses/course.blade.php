@@ -9,11 +9,7 @@
             <div class="ls-item-content">
                 <div class="ls-item-title">{{ $course->title }}</div>
                 <p class="ls-item-text">
-                    @if(strlen($course->description) > 100)
-                    {{ substr($course->description, 0, 97) }}...
-                    @else
-                    {{ $course->description }}
-                    @endif
+                    {{ limitString($course->description, 100)}}
                 </p>
             </div>
         </div>

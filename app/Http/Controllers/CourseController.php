@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Review;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,6 +26,8 @@ class CourseController extends Controller
         $course = Course::find($id);
         $lessons = $course->lessons()->filter($request->all())->paginate(Config::get('lesson.items_per_page'));
         $tags = $course->tags;
-        return view('courses.show', compact('courses', 'course', 'lessons', 'tags', 'teachers', 'request'));
+        $reviews = $course->reviews;
+        $reviewId = Review::getReviewId($id);
+        return view('courses.show', compact('courses', 'course', 'lessons', 'tags', 'teachers', 'request', 'reviews', 'reviewId'));
     }
 }

@@ -9,7 +9,9 @@
             @endif
         @endforeach
         <div class="course-other-btn">
-            <button>View all ours courses</button>
+            <form action="{{ route('courses.index') }}" method="get">
+                <button>View all ours courses</button>
+            </form>
         </div>
     </div>
 </div>

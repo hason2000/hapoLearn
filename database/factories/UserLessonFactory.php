@@ -14,8 +14,8 @@ class UserLessonFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => rand(1, 30),
-            'lesson_id' => rand(1, 300)
+            'user_id' => rand(1, 500),
+            'lesson_id' => rand(1, 400)
         ];
     }
 }

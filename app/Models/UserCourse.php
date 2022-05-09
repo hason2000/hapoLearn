@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class UserCourse extends Model
 {
@@ -13,6 +14,7 @@ class UserCourse extends Model
 
     protected $fillable = [
         'user_id',
-        'course_id'
+        'course_id',
+        'status'
     ];
 }

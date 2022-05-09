@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 class User extends Authenticatable
@@ -22,7 +23,8 @@ class User extends Authenticatable
         'date_of_birth',
         'username',
         'avata_url',
-        'role'
+        'role',
+        'aboutme'
     ];
 
     protected $hidden = [
@@ -34,9 +36,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function getUserByEmail($email)
+    {
+        return User::where('email', $email)->first();
+    }
+
     public function getNameAttribute($name)
     {
-        return strtoupper($name);
+        return empty($name) ? $this->username : strtoupper($name);
     }
 
     public function getUsernameAttribute($username)
@@ -56,7 +63,7 @@ class User extends Authenticatable
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class, 'user_course', 'user_id', 'course_id');
+        return $this->belongsToMany(Course::class, 'user_courses', 'user_id', 'course_id')->withPivot('status');
     }
 
     public function reviews()
@@ -66,7 +73,67 @@ class User extends Authenticatable
     
     public function lessons()
     {
-        return $this->belongsToMany(Lesson::class, 'user_lesson', 'user_id', 'lesson_id');
+        return $this->belongsToMany(Lesson::class, 'user_lessons', 'user_id', 'lesson_id');
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class, 'user_documents', 'user_id', 'document_id');
+    }
+
+    public function getDateBirthday()
+    {
+        $stringFormat = "d \/\ m \/\ Y";
+        if (empty($this['date_of_birth'])) {
+            $date = date_create($this['created_at']);
+            return date_format($date, $stringFormat);
+        } else {
+            $date = date_create($this['date_of_birth']);
+            return date_format($date, $stringFormat);
+        }
+    }
+
+    public function getDateOfBirthDefault()
+    {
+        $dateCreated = date_create($this['created_at']);
+        $stringFormat = "Y-m-d";
+        return empty($this['date_of_birth']) ? date_format($dateCreated, $stringFormat) : $this['date_of_birth'];
+    }
+
+    public function getPhone()
+    {
+        if (empty($this['phonenumber'])) {
+            return Config::get('user.default_phone_number');
+        }
+        return $this['phonenumber'];
+    }
+
+    public function getAddress()
+    {
+        if (empty($this['address'])) {
+            return Config::get('user.default_address');
+        }
+        return $this['address'];
+    }
+
+    public function getAboutMe()
+    {
+        if (empty($this['aboutme'])) {
+            return Config::get('user.default_aboutme');
+        }
+        return $this['aboutme'];
+    }
+
+    public function isJoined($courseId)
+    {
+        $userCourse = UserCourse::where('user_id', Auth::id())->where('course_id', $courseId)->first();
+        return (is_null($userCourse) ? false : true);
+    }
+
+    public function isLearning($courseId)
+    {
+        $userCourse = UserCourse::where('user_id', Auth::id())->where('course_id', $courseId)->first();
+        return ($userCourse->status == Config::get('usercourse.learning_status') ? true : false);
     }
 
     public function scopeTeacher($query)

@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
   $('#headerBtnIcon').click(function() {
     if ($('.header-content').hasClass('show')) {
       $('.navbar-toggler-icon').removeClass('hide');
@@ -108,6 +107,24 @@ $(document).ready(function(){
     $('.modal-backdrop').css({'display' : 'block'})
   })
 
+  $('.review-login').click(function() {
+    $('#loginRegisterModal').modal();
+    $('.body-cus').addClass('modal-open');
+    $('.body-cus').css({'padding-right' : '0'});
+    $('.modal').addClass('show');
+    $('.modal').css({'display' : 'block'});
+    $('.modal-backdrop').css({'display' : 'block'})
+  })
+
+  $('.btn-click').click(function() {
+    $('#loginRegisterModal').modal();
+    $('.body-cus').addClass('modal-open');
+    $('.body-cus').css({'padding-right' : '0'});
+    $('.modal').addClass('show');
+    $('.modal').css({'display' : 'block'});
+    $('.modal-backdrop').css({'display' : 'block'})
+  })
+
   if ($('.alert').hasClass('alert-danger')) {
     $('#loginRegisterModal').modal();
     if ($('.form-l').hasClass('form-l-err')) {
@@ -128,7 +145,11 @@ $(document).ready(function(){
     }
   }
 
-  $('.btn-listcourse-filter').click(function (){
+  if ($('.form-l').hasClass('form-l-require')) {
+    $('#loginRegisterModal').modal();
+  }
+
+  $('.btn-listcourse-filter').click(function () {
     if ($('.ls-filter').hasClass('filter-active')) {
       $('.ls-filter').removeClass('filter-active');
     } else {
@@ -141,6 +162,61 @@ $(document).ready(function(){
   $('.custom-tag').select2({
     placeholder: 'Tags',
   })
+
+  function resetStarRating() {
+    $('.fa-star-cus').css('color', '#D8D8D8');
+  }
+  
+  var clickedStar = -1;
+
+  $('.fa-star-cus').mouseenter(function(){
+    resetStarRating();
+    var currentIndex = parseInt($(this).data('index'));
+    for (var i = 0; i < currentIndex; i++) {
+      $('.fa-star-cus:eq('+ i +')').css('color', '#F2C54F');
+    }
+  })
+
+  $('.fa-star-cus').click(function(){
+    clickedStar = parseInt($(this).data('index'));
+  })
+
+  $('.fa-star-cus').mouseleave(function(){
+    resetStarRating();
+    if (clickedStar != -1) {
+      for (var i = 0; i < clickedStar; i++) {
+        $('.fa-star-cus:eq('+ i +')').css('color', '#F2C54F');
+      }
+    }
+  })
+
+  if ($('.alert').hasClass('alert-star') || $('.check').hasClass('active')) {
+    $('.nav-tab-cus a[href="#review"]').tab('show');
+  }
+
+  $('.profile-file').change(function () {
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('.profile-img-avata').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+
+  if ($('.error').hasClass('error-joincourse')) {
+    alert("Tham Gia Không Thành Công");
+  }
+
+  if ($('.error').hasClass('error-endcourse')) {
+    alert("Kết Thúc Khóa Học Không Thành Công");
+  }
+
+  if ($('.timeoutToken').hasClass('active')) {
+    alert('Không thể đổi mật khẩu do đã quá thời gian');
+  }
 
   $('.feedback-content').slick({
     dots: false,

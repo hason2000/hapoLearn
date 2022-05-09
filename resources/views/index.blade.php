@@ -12,7 +12,13 @@
                     </div>
                     <p class="banner-tagp">Interactive lessons, "on-the-go" <br>
                         practice, peer support</p>
-                    <button class="banner-btn">Start Learning Now!</button>
+                    @if (Auth::check())
+                        <form action="{{ route('courses.index') }}" method="get">
+                            <button type="submit" class="banner-btn">Start Learning Now!</button>
+                        </form>
+                    @else
+                        <button class="banner-btn btn-click">Start Learning Now!</button>
+                    @endif
                 </div>
             </div>
         </section>
@@ -26,11 +32,9 @@
                         <div class="card-body courses-card-body">
                             <div class="card-title">{{ $c->title }}</div>
                             <p class="card-text">
-                                @if(strlen($c->description) > 100)
-                                    {{ substr($c->description, 0, 97) }}...
-                                @endif
+                                {{ limitString($c->description, 70)}}
                             </p>
-                            <a href="#" class="btn courses-btn">Take This Course</a>
+                            <a href="{{ route('courses.show', $c->id) }}" class="btn courses-btn">Take This Course</a>
                         </div>
                     </div>
                 @endforeach
@@ -46,16 +50,14 @@
                             <div class="card-body courses-card-body">
                                 <div class="card-title">{{ $c->title }}</div>
                                 <p class="card-text">
-                                    @if(strlen($c->description) > 100)
-                                        {{ substr($c->description, 0, 97) }}...
-                                    @endif
+                                    {{ limitString($c->description, 70)}}
                                 </p>
-                                <a href="#" class="btn courses-btn">Take This Course</a>
+                                <a href="{{ route('courses.show', $c->id) }}" class="btn courses-btn">Take This Course</a>
                             </div>
                         </div>
                     @endforeach
                 </div>
-                <a href="#" class="courses-view-courses">View All Our Courses <i
+                <a href="{{ route('courses.index') }}" class="courses-view-courses">View All Our Courses <i
                         class="fa fa-long-arrow-alt-right"></i></a>
             </div>
         </section>
@@ -121,9 +123,7 @@
                     <div class="feedback-item">
                         <div class="feedback-text">
                             <p class="review-text">
-                                @if(strlen($rv->content) > 130)
-                                    "{{ substr($rv->content, 0, 127) }}..."
-                                @endif
+                                {{ limitString($c->description, 130)}}
                             </p>
                         </div>
                         <div class="feedback-bot">
@@ -151,7 +151,13 @@
                     <br>
                     growing community!
                 </p>
-                <button class="slogan-btn">Start Learning Now!</button>
+                @if (Auth::check())
+                    <form action="{{ route('courses.index') }}" method="get">
+                        <button type="submit" class="slogan-btn">Start Learning Now!</button>
+                    </form>
+                @else
+                    <button class="slogan-btn btn-click">Start Learning Now!</button>
+                @endif
             </div>
         </section>
         <section class="statistic">

@@ -1,8 +1,8 @@
 <header>
-    <nav class="navbar navbar-expand-sm header-navbar">
+    <nav class="navbar navbar-expand-sm navbar-light header-navbar">
         <div class="header-navbar-brand">
             <div class="navbar-brand">
-                <a href="#"><img src="{{ asset('images/hapo_learn.png') }}" alt="hapo_learn" class="w-100"></a>
+                <a href="{{ route('home') }}"><img src="{{ asset('images/hapo_learn.png') }}" alt="hapo_learn" class="w-100"></a>
             </div>
         </div>
         <button class="navbar-toggler header-tonggle" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="headerBtnIcon">
@@ -22,9 +22,11 @@
                         <a class="nav-link" href="#">LOGIN/REGISTER</a>
                     </li>
                 @endif
-                <li class="nav-item header-nav-item">
-                    <a class="nav-link" href="#">PROFILE</a>
-                </li>
+                @if (Auth::check())
+                    <li class="nav-item header-nav-item @if(Request::route()->getName() == 'users.show') header-active @endif">
+                        <a class="nav-link" href="{{ route('users.show', Auth::id()) }}">PROFILE</a>
+                    </li>
+                @endif
             </ul>
         </div>
         @if(Auth::user())

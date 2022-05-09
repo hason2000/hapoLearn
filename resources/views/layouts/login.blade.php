@@ -5,11 +5,11 @@
                 <p class="modal-header-l modal-active-cus">LOGIN</p>
                 <P class="modal-header-r">REGISTER</P>
             </div>
-            <form class="form-r d-none @if($errors->first('username') || $errors->first('password') || $errors->first('cfpassword') || $errors->first('email')) form-r-err  @endif" action="{{ route('register') }}" method="POST">
+            <form class="form-r d-none @if($errors->first('username') || $errors->first('password') || $errors->first('confirm_password') || $errors->first('email')) form-r-err  @endif" action="{{ route('register') }} " method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="username">Username:</label>
-                    <input type="text" class="form-control" id="username" name="username">
+                    <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}">
                     @if($errors->first('username'))
                     <div class="alert alert-danger" role="alert">
                         {{ $errors->first('username') }}
@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email">
+                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
                     @if($errors->first('email'))
                     <div class="alert alert-danger" role="alert">
                         {{ $errors->first('email') }}
@@ -26,8 +26,8 @@
                     @endif
                 </div>
                 <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <label for="passwordr">Password:</label>
+                    <input type="password" class="form-control" id="passwordr" name="password" value="{{ old('password') }}">
                     @if($errors->first('password'))
                     <div class="alert alert-danger" role="alert">
                         {{ $errors->first('password') }}
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label for="rppassword">Repeat Password:</label>
-                    <input type="password" class="form-control" id="rppassword" name="confirm_password">
+                    <input type="password" class="form-control" id="rppassword" name="confirm_password" value="{{ old('confirm_password') }}">
                     @if($errors->first('confirm_password'))
                     <div class="alert alert-danger" role="alert">
                         {{ $errors->first('confirm_password') }}
@@ -47,12 +47,17 @@
                     <button type="submit">REGISTER</button>
                 </div>
             </form>
-
-            <form class="form-l d-block @if($errors->first('login_username') || $errors->first('login_password') || session('error')) form-l-err @endif" action="{{ route('login') }}" method="post">
+            <form class="form-l d-block @if($errors->first('login_username') || $errors->first('login_password') || session('error')) form-l-err @endif @if (session('require_login'))
+                form-l-require
+            @endif" action="{{ route('login') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="usernamel">Username:</label>
-                    <input type="text" class="form-control" id="usernamel" name="login_username">
+                    @if (session('dataError'))
+                        <input type="text" class="form-control" id="usernamel" name="login_username" value="{{ session('dataError')['username'] }}">
+                    @else
+                        <input type="text" class="form-control" id="usernamel" name="login_username" value="{{ old('login_username') }}">
+                    @endif
                     @if($errors->first('login_username'))
                     <div class="alert alert-danger" role="alert">
                         {{ $errors->first('login_username') }}
@@ -61,7 +66,11 @@
                 </div>
                 <div class="form-group">
                     <label for="passwordl">Password:</label>
-                    <input type="password" class="form-control" id="passwordl" name="login_password">
+                    @if (session('dataError'))
+                        <input type="password" class="form-control" id="passwordl" name="login_password" value="{{ session('dataError')['password'] }}">
+                    @else
+                        <input type="password" class="form-control" id="passwordl" name="login_password" value="{{ old('login_password') }}">
+                    @endif
                     @if($errors->first('login_password'))
                     <div class="alert alert-danger" role="alert">
                         {{ $errors->first('login_password') }}
@@ -73,7 +82,7 @@
                         <input type="checkbox" class="form-check-input" id="rememberl" name="remember_token" value="remember_token">
                         <label class="form-check-label" for="rememberl">Remember me</label>
                     </div>
-                    <a href="#" class="">Forgot Password</a>
+                    <a href="{{ route('password.request') }}" class="">Forgot Password</a>
                 </div>
                 @if(session('error'))
                 <div class="alert alert-danger" role="alert">

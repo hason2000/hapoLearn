@@ -33,7 +33,7 @@ class RegisterRequest extends FormRequest
             'password.min' => 'độ dài không hợp lệ(từ 8-32 kí tự)',
             'confirm_password.same' => 'mật khẩu không khớp',
             'email.email' => 'sai định dạng email',
-            'email.unique' => 'password đã tồn tại'
+            'email.unique' => 'email đã tồn tại'
         ];
     }
 }
